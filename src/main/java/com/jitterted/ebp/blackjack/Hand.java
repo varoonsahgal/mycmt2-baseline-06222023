@@ -2,7 +2,6 @@ package com.jitterted.ebp.blackjack;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.fusesource.jansi.Ansi.ansi;
 //we want to make these classes "pure domain" - they should only deal with business logic
@@ -36,20 +35,14 @@ public class Hand {
         return handValue;
     }
 
-    String displayFaceUpCard() {
-        return ConsoleCard.display(cards.get(0));
+    public List<Card> cards() {
+        return List.copyOf(cards);
     }
 
     boolean dealerMustDrawCard() {
         return value() <= 16;
     }
 
-    void display() {
-        System.out.println(cards.stream()
-                                .map(ConsoleCard::display)
-                                .collect(Collectors.joining(
-                                        ansi().cursorUp(6).cursorRight(1).toString())));
-    }
 
     public void drawFrom(Deck deck) {
         cards.add(deck.draw());
